@@ -88,7 +88,8 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Models\" />
+    <Folder Include="Core\Models\" />
+    <Folder Include="Core\Services\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\nancy-logo.png">
