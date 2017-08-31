@@ -159,7 +159,7 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Domicile.Plugin\Domicile.Common.csproj">
+    <ProjectReference Include="..\Domicile.Common\Domicile.Common.csproj">
       <Project>{4323C15A-A6C3-4EA2-8FDE-93F37FEE7B6A}</Project>
       <Name>Domicile.Common</Name>
     </ProjectReference>

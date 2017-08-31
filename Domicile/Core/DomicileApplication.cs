@@ -8,7 +8,7 @@ using Domicile.Core.Events;
 using Domicile.Core.Extentions;
 using Domicile.Core.Logging;
 using Domicile.Core.Services;
-using Domicile.Plugin;
+using Domicile.Common;
 
 namespace Domicile.Core
 {

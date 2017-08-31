@@ -4,7 +4,7 @@ using System.Collections.Specialized;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Domicile.Plugin;
+using Domicile.Common;
 using Nancy;
 using Nancy.Responses;
 

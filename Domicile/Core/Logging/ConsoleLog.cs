@@ -1,5 +1,5 @@
 ﻿using System;
-using Domicile.Plugin;
+using Domicile.Common;
 
 namespace Domicile.Core.Logging
 {

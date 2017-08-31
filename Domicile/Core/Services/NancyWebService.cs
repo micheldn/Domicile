@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Domicile.Core.Extentions;
-using Domicile.Plugin;
+using Domicile.Common;
 using Nancy.Hosting.Self;
 
 namespace Domicile.Core.Services

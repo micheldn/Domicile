@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Domicile.Core.HardwareDevices;
-using Domicile.Plugin;
+using Domicile.Common;
 
 namespace Domicile.Core.Services
 {
