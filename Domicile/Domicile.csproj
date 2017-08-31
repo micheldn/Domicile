@@ -66,11 +66,74 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Bootstrapper.cs" />
+    <Compile Include="Core\DomicileApplication.cs" />
+    <Compile Include="Core\Events\ServiceRegisteredEventArgs.cs" />
+    <Compile Include="Core\Extentions\LogExtensions.cs" />
+    <Compile Include="Core\HardwareDevices\BaseHardwareDevice.cs" />
+    <Compile Include="Core\HardwareDevices\LEDHardwareDevice.cs" />
+    <Compile Include="Core\Logging\ConsoleLog.cs" />
+    <Compile Include="Core\Logging\NullLog.cs" />
+    <Compile Include="Core\Services\BaseServiceContext.cs" />
+    <Compile Include="Core\Services\HardwareDeviceService.cs" />
+    <Compile Include="Core\Services\NancyWebService.cs" />
+    <Compile Include="Core\Services\SystemService.cs" />
     <Compile Include="Modules\IndexModule.cs" />
+    <Compile Include="Modules\ServicesModule.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\Css\app.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Css\material.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Css\md-data-table-style.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Libraries\angular\angular-animate.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Libraries\angular\angular-aria.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Libraries\lodash\lodash.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Libraries\ng-material-icons\material-icons.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Libraries\ng-md-data-table\md-data-table.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Libraries\angular\angular-route.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Libraries\angular\angular-sanitize.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Libraries\angular\angular.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Libraries\jquery.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Libraries\angular\angular-material.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Libraries\ng-md-data-table\md-data-table-templates.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Partials\Dialogs\detailed-service.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Scripts\app.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Partials\services.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="icon.png" />
     <None Include="app.config" />
     <Content Include="packages.config" />
@@ -89,12 +152,17 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Core\Models\" />
-    <Folder Include="Core\Services\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\nancy-logo.png">
+    <Content Include="Content\Images\nancy-logo.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Domicile.Plugin\Domicile.Common.csproj">
+      <Project>{4323C15A-A6C3-4EA2-8FDE-93F37FEE7B6A}</Project>
+      <Name>Domicile.Common</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

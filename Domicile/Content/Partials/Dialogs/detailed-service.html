@@ -1,0 +1,45 @@
+﻿<md-dialog aria-label="{{ service.name }}">
+    <form ng-cloak>
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h2>{{ service.name }}</h2>
+                <span flex></span>
+                <md-button class="md-icon-button" ng-click="cancel()">
+                    <!-- md-svg-src="img/icons/ic_close_24px.svg" -->
+                    <md-icon aria-label="Close dialog"></md-icon>
+                </md-button>
+            </div>
+        </md-toolbar>
+
+        <md-dialog-content>
+            <div class="md-dialog-content">
+                <md-input-container style="margin: 15px;">
+                    <label>Filter by search</label>
+                    <input type="text" ng-model="filterText">
+                </md-input-container>
+
+                <mdt-table>
+                    <mdt-header-row>
+                        <mdt-column align-rule="left">Key</mdt-column>
+                        <mdt-column align-rule="right">Value</mdt-column>
+                    </mdt-header-row>
+                    <mdt-row ng-repeat="(key, value) in service.serviceVariables">
+                        <mdt-cell><span>{{ key }}</span></mdt-cell>
+                        <mdt-cell><span>{{ value }}</span></mdt-cell>
+                    </mdt-row>
+                </mdt-table>
+            </div>
+        </md-dialog-content>
+
+        <md-dialog-actions layout="row">
+            <span flex></span>
+            <md-button ng-click="">
+                Save
+            </md-button>
+            <md-button ng-click="cancel()">
+                Cancel
+            </md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog>
+

@@ -7,8 +7,8 @@
     <ProjectGuid>{4323C15A-A6C3-4EA2-8FDE-93F37FEE7B6A}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Domicile.Plugin</RootNamespace>
-    <AssemblyName>Domicile.Plugin</AssemblyName>
+    <RootNamespace>Domicile.Common</RootNamespace>
+    <AssemblyName>Domicile.Common</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -40,9 +40,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IPlugin.cs" />
+    <Compile Include="EventSeverity.cs" />
+    <Compile Include="HardwareDeviceType.cs" />
+    <Compile Include="IDomicileApplication.cs" />
+    <Compile Include="IHardwareDevice.cs" />
+    <Compile Include="ILog.cs" />
+    <Compile Include="IServiceContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\IService.cs" />
+    <Compile Include="IService.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

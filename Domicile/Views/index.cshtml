@@ -1,20 +1,29 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html ng-app="domicileApp">
 <head>
-    <meta charset="utf-8" />
     <title>Domicile</title>
-
-	<style type="text/css">
-
-		body {
-			text-align: center;
-		}
-
-	</style>
-
+    <link href="~/Content/Css/material.css" rel="stylesheet"/>
+    <link href="~/Content/Css/md-data-table-style.css" rel="stylesheet" />
+    <link href="~/Content/Css/app.css" rel="stylesheet" />
 </head>
 <body>
-	<img src="~/Content/nancy-logo.png" alt="Nancy logo" /><br />
-	This view was rendered using the Nancy Razor view engine
+    <div class="container">
+        <a href="#!/services">Services</a>
+    </div>
+
+    <div ng-view></div>
+
+    <script src="~/Content/Libraries/jquery.js"></script>
+    <script src="~/Content/Libraries/lodash/lodash.js"></script>
+    <script src="~/Content/Libraries/angular/angular.js"></script>
+    <script src="~/Content/Libraries/angular/angular-route.js"></script>
+    <script src="~/Content/Libraries/angular/angular-animate.js"></script>
+    <script src="~/Content/Libraries/angular/angular-aria.js"></script>
+    <script src="~/Content/Libraries/angular/angular-material.js"></script>
+    <script src="~/Content/Libraries/angular/angular-sanitize.js"></script>
+    <script src="~/Content/Libraries/ng-material-icons/material-icons.js"></script>
+    <script src="~/Content/Libraries/ng-md-data-table/md-data-table.js"></script>
+    <script src="~/Content/Libraries/ng-md-data-table/md-data-table-templates.js"></script>
+    <script src="~/Content/Scripts/app.js"></script>
 </body>
 </html>

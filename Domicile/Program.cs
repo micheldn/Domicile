@@ -1,23 +1,34 @@
 ﻿using System;
+using System.Threading;
+using Domicile.Core;
+using Domicile.Core.Services;
 using Nancy.Hosting.Self;
+using Nancy.Routing;
 
 namespace Domicile
 {
-    class Program
+    internal class Program
     {
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
-            var uri =
-                new Uri("http://localhost:3579");
+            // Get DomicileApplication instance
+            var app = DomicileApplication.GetInstance();
 
-            using (var host = new NancyHost(uri))
-            {
-                host.Start();
+            // Do Setup
+            app.Setup();
 
-                Console.WriteLine("Your application is running on " + uri);
-                Console.WriteLine("Press any [Enter] to close the host.");
-                Console.ReadLine();
-            }
+            // Do Run
+            app.Run();
+
+#if DEBUG
+            Console.ReadKey();
+#endif
+
+            app.Shutdown();
+
+#if DEBUG
+            Console.ReadKey();
+#endif
         }
     }
 }

@@ -4,9 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Domicile.Plugin.Services
+namespace Domicile.Common
 {
-    public interface IService
+    public enum HardwareDeviceType
     {
+        Lamp = 1,
+        TemperaturSensor = 2,
+
     }
 }

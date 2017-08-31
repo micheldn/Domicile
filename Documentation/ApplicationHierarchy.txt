@@ -1,0 +1,11 @@
+﻿[LAN + (Raspberry Pi || PC)] Domicile -> Command & Control Server including an embedded web server that exposes controls for the user to interact with the hardware devices.
+
+Potential middleman application
+[Wifi + (Raspberry Pi || Arduino)] 
+
+[Wifi + Arduino] Hardware Device -> A simple device that interfaces with a 3rd-party hardware device that can control a multitude of different appliances. From lamps to heat, from television to radio.
+
+
+TEST SETUP:
+Domicile Server on PC/Laptop, but hopefully on Raspberry Pi
+Arduino using serial COM ports to emulate network usage with a simple LED to change colors. 
