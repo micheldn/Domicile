@@ -41,13 +41,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="EventSeverity.cs" />
+    <Compile Include="Extensions\LogExtensions.cs" />
     <Compile Include="HardwareDeviceType.cs" />
     <Compile Include="IDomicileApplication.cs" />
     <Compile Include="IHardwareDevice.cs" />
     <Compile Include="ILog.cs" />
     <Compile Include="IServiceContext.cs" />
+    <Compile Include="Logging\ConsoleLog.cs" />
+    <Compile Include="Logging\NullLog.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="IService.cs" />
+    <Compile Include="ServiceType.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

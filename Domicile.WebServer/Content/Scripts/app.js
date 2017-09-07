@@ -4,7 +4,7 @@ domicileApp.config(function($routeProvider) {
     $routeProvider
         .when("/services",
         {
-            templateUrl: "/Content/Partials/services.html",
+            templateUrl: "/Content/Views/Partials/services.html",
             controller: "ServicesController"
         });
 });
@@ -39,7 +39,7 @@ domicileApp.controller("ServicesController",
                 .then(function(response) {
                         $mdDialog.show({
                             controller: "DialogController",
-                            templateUrl: "/Content/Partials/Dialogs/detailed-service.html",
+                            templateUrl: "/Content/Views/Partials/Dialogs/detailed-service.html",
                             parent: angular.element(document.body),
                             clickOutsideToClose: true,
                             locals: { service: service }

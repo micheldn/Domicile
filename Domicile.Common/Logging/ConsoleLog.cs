@@ -1,7 +1,7 @@
 ﻿using System;
 using Domicile.Common;
 
-namespace Domicile.Core.Logging
+namespace Domicile.Common.Logging
 {
     public class ConsoleLog : ILog
     {

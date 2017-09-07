@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Domicile.Core.Events;
-using Domicile.Core.Extentions;
-using Domicile.Core.Logging;
+﻿using System.Collections.Generic;
 using Domicile.Core.Services;
 using Domicile.Common;
+using Domicile.Common.Extentions;
+using Domicile.WebServer;
+using Domicile.Common.Logging;
+using System.IO;
 
 namespace Domicile.Core
 {
@@ -63,13 +59,16 @@ namespace Domicile.Core
         {
             var systemService = new SystemService(this);
             var hardwareDeviceService = new HardwareDeviceService();
-            var nancyWebService = new NancyWebService();
+            var webServerService = new WebServerService();
 
             // TODO: 
 
             _services.Add(systemService);
             _services.Add(hardwareDeviceService);
-            _services.Add(nancyWebService);
+            _services.Add(webServerService);
+
+            // Ensure that all the folders that are necessary are created/exist
+            Directory.CreateDirectory("Services");
 
             foreach (var service in _services)
             {

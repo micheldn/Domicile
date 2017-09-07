@@ -20,6 +20,7 @@ namespace Domicile.Core.Services
         
         public ConcurrentDictionary<string, object> ServiceVariables { get; set; }
         public string Name { get; set; }
+        public ServiceType ServiceType => ServiceType.HardwareDevice;
         public bool IsActive { get; set; }
         public Dictionary<Guid, BaseHardwareDevice> ConnectedDevices { get; set; }
 

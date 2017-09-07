@@ -2,8 +2,6 @@
 using System.Threading;
 using Domicile.Core;
 using Domicile.Core.Services;
-using Nancy.Hosting.Self;
-using Nancy.Routing;
 
 namespace Domicile
 {
