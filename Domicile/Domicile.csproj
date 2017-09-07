@@ -43,103 +43,29 @@
     </StartupObject>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Nancy, Version=1.4.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Nancy.1.4.3\lib\net40\Nancy.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Nancy.Hosting.Self">
-      <HintPath>..\packages\Nancy.Hosting.Self.1.4.1\lib\net40\Nancy.Hosting.Self.dll</HintPath>
-    </Reference>
-    <Reference Include="Nancy.ViewEngines.Razor, Version=1.4.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Nancy.Viewengines.Razor.1.4.3\lib\net40\Nancy.ViewEngines.Razor.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.ServiceProcess" />
     <Reference Include="System.Web" />
-    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.3\lib\net45\System.Web.Razor.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Bootstrapper.cs" />
     <Compile Include="Core\DomicileApplication.cs" />
     <Compile Include="Core\Events\ServiceRegisteredEventArgs.cs" />
-    <Compile Include="Core\Extentions\LogExtensions.cs" />
     <Compile Include="Core\HardwareDevices\BaseHardwareDevice.cs" />
     <Compile Include="Core\HardwareDevices\LEDHardwareDevice.cs" />
-    <Compile Include="Core\Logging\ConsoleLog.cs" />
-    <Compile Include="Core\Logging\NullLog.cs" />
     <Compile Include="Core\Services\BaseServiceContext.cs" />
     <Compile Include="Core\Services\HardwareDeviceService.cs" />
-    <Compile Include="Core\Services\NancyWebService.cs" />
     <Compile Include="Core\Services\SystemService.cs" />
-    <Compile Include="Modules\IndexModule.cs" />
-    <Compile Include="Modules\ServicesModule.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\Css\app.css">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\Css\material.css">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\Css\md-data-table-style.css">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\Libraries\angular\angular-animate.js">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\Libraries\angular\angular-aria.js">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\Libraries\lodash\lodash.js">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\Libraries\ng-material-icons\material-icons.js">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\Libraries\ng-md-data-table\md-data-table.js">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\Libraries\angular\angular-route.js">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\Libraries\angular\angular-sanitize.js">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\Libraries\angular\angular.js">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\Libraries\jquery.js">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\Libraries\angular\angular-material.js">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\Libraries\ng-md-data-table\md-data-table-templates.js">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\Partials\Dialogs\detailed-service.html">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\Scripts\app.js">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\Partials\services.html">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Include="icon.png" />
     <None Include="app.config" />
-    <Content Include="packages.config" />
-    <Content Include="Views\index.cshtml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Include="web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -151,35 +77,21 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Core\Extentions\" />
     <Folder Include="Core\Models\" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Content\Images\nancy-logo.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Domicile.Common\Domicile.Common.csproj">
       <Project>{4323C15A-A6C3-4EA2-8FDE-93F37FEE7B6A}</Project>
       <Name>Domicile.Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Domicile.WebServer\Domicile.WebServer.csproj">
+      <Project>{a7e4d74c-df36-437e-a26c-df41a1153c20}</Project>
+      <Name>Domicile.WebServer</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <PropertyGroup>
-    <PostBuildEvent>
-if $(ConfigurationName) == Debug (
-xcopy /s /y /R "$(SolutionDir)packages\Nancy.Viewengines.Razor.1.4.3\BuildProviders\Nancy.ViewEngines.Razor.BuildProviders.dll" "$(ProjectDir)bin\"
-xcopy /s /y /R "$(SolutionDir)packages\Nancy.Viewengines.Razor.1.4.3\lib\Net40\Nancy.ViewEngines.Razor.dll" "$(ProjectDir)bin\"
-)</PostBuildEvent>
-  </PropertyGroup>
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
-  <Import Project="..\packages\Nancy.Viewengines.Razor.1.4.3\build\Nancy.ViewEngines.Razor.targets" Condition="Exists('..\packages\Nancy.Viewengines.Razor.1.4.3\build\Nancy.ViewEngines.Razor.targets')" />
-  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
-    <PropertyGroup>
-      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
-    </PropertyGroup>
-    <Error Condition="!Exists('..\packages\Nancy.Viewengines.Razor.1.4.3\build\Nancy.ViewEngines.Razor.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Nancy.Viewengines.Razor.1.4.3\build\Nancy.ViewEngines.Razor.targets'))" />
-  </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

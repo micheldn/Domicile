@@ -19,6 +19,7 @@ namespace Domicile.Core.Services
 
         public ConcurrentDictionary<string, object> ServiceVariables { get; private set; }
         public string Name => "SystemService";
+        public ServiceType ServiceType => ServiceType.System;
 
         public SystemService(IDomicileApplication domicileApplication)
         {

@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Domicile.Common;
 
-namespace Domicile.Core.Extentions
+namespace Domicile.Common.Extentions
 {
     public static class LogExtensions
     {

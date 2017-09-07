@@ -11,6 +11,7 @@ namespace Domicile.Common
     public interface IService
     {
         ConcurrentDictionary<string, object> ServiceVariables { get; }
+        ServiceType ServiceType { get; }
         string Name { get; }
         bool IsActive { get; }
         void OnRegistered(IServiceContext serviceContext);
