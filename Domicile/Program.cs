@@ -10,7 +10,7 @@ namespace Domicile
         private static void Main(string[] args)
         {
             // Get DomicileApplication instance
-            var app = DomicileApplication.GetInstance();
+            var app = new DomicileApplication();
 
             // Do Setup
             app.Setup();

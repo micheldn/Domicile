@@ -13,6 +13,7 @@ using System.ComponentModel.Composition;
 
 namespace Domicile.WebServer
 {
+    [Export(typeof(IService))]
     public class WebServerService : IService
     {
         private IServiceContext _serviceContext;
@@ -40,12 +41,11 @@ namespace Domicile.WebServer
 
         public void OnStartup()
         {
-            var systemService = _serviceContext.Services.Single(s => s.ServiceType == ServiceType.System);
+            var systemService = _serviceContext.Services.SingleOrDefault(s => s.ServiceType == ServiceType.System);
 
             if (systemService == null)
             {
                 _serviceContext.Log.Error("Failed finding SystemService");
-                return;
             }
 
             ServiceVariables["IsRunning"] = true;
@@ -66,7 +66,7 @@ namespace Domicile.WebServer
             using (_webServer = new EmbedIO.WebServer(uri.AbsoluteUri, EmbedIO.Constants.RoutingStrategy.Regex))
             {
 #if DEBUG
-                Terminal.Settings.DisplayLoggingMessageType = LogMessageType.Debug;
+                //Terminal.Settings.DisplayLoggingMessageType = LogMessageType.Debug;
 #else
                 Terminal.Settings.DisplayLoggingMessageType = LogMessageType.None;
 #endif
