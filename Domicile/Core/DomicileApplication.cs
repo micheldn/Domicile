@@ -5,6 +5,9 @@ using Domicile.Common.Extentions;
 using Domicile.WebServer;
 using Domicile.Common.Logging;
 using System.IO;
+using System.ComponentModel.Composition;
+using System.ComponentModel.Composition.Hosting;
+using System;
 
 namespace Domicile.Core
 {
@@ -12,26 +15,15 @@ namespace Domicile.Core
     {
         private static IDomicileApplication _domicileApplicationInstance;
 
+        [ImportMany]
         private readonly List<IService> _services;
         private readonly ILog _log;
         private readonly BaseServiceContext _baseServiceContext;
 
         /// <summary>
-        /// Create a new instance if current instance is null
-        /// </summary>
-        /// <returns>Singleton instance of <see cref="DomicileApplication"/></returns>
-        public static IDomicileApplication GetInstance()
-        {
-            if(_domicileApplicationInstance == null)
-                _domicileApplicationInstance = new DomicileApplication();
-
-            return _domicileApplicationInstance;
-        }
-
-        /// <summary>
         /// 
         /// </summary>
-        private DomicileApplication()
+        public DomicileApplication()
         {
             _log = new ConsoleLog();
             _services = new List<IService>();
@@ -57,15 +49,34 @@ namespace Domicile.Core
         /// </summary>
         public void Setup()
         {
-            var systemService = new SystemService(this);
-            var hardwareDeviceService = new HardwareDeviceService();
-            var webServerService = new WebServerService();
+            //var systemService = new SystemService(this);
+            //var hardwareDeviceService = new HardwareDeviceService();
+            //var webServerService = new WebServerService();
 
-            // TODO: 
+            //// TODO: 
 
-            _services.Add(systemService);
-            _services.Add(hardwareDeviceService);
-            _services.Add(webServerService);
+            //_services.Add(systemService);
+            //_services.Add(hardwareDeviceService);
+            //_services.Add(webServerService);
+
+            _log.Informational("Checking for services...");
+
+            // AggregateCatalog combines all catalogs
+            var serviceCatalog = new AggregateCatalog();
+            var directoryCatalog = new DirectoryCatalog(AppDomain.CurrentDomain.BaseDirectory);
+            serviceCatalog.Catalogs.Add(directoryCatalog);
+            var container = new CompositionContainer(serviceCatalog);
+
+            try
+            {
+                _log.Informational("Composing Services");
+                container.ComposeParts(this);
+            }
+            catch(CompositionException compositionException)
+            {
+                _log.Error("Failed composing services");
+                _log.Error(compositionException.Message);
+            }
 
             // Ensure that all the folders that are necessary are created/exist
             Directory.CreateDirectory("Services");
