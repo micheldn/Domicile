@@ -9,6 +9,7 @@ using Unosquare.Labs.EmbedIO.Modules;
 using Unosquare.Labs.EmbedIO;
 using Unosquare.Swan;
 using Domicile.WebServer.Controllers;
+using System.ComponentModel.Composition;
 
 namespace Domicile.WebServer
 {

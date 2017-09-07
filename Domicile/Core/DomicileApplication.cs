@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
-using Domicile.Core.Logging;
 using Domicile.Core.Services;
 using Domicile.Common;
 using Domicile.Common.Extentions;
 using Domicile.WebServer;
+using Domicile.Common.Logging;
+using System.IO;
 
 namespace Domicile.Core
 {
@@ -65,6 +66,9 @@ namespace Domicile.Core
             _services.Add(systemService);
             _services.Add(hardwareDeviceService);
             _services.Add(webServerService);
+
+            // Ensure that all the folders that are necessary are created/exist
+            Directory.CreateDirectory("Services");
 
             foreach (var service in _services)
             {

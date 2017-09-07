@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Domicile.Common;
 
-namespace Domicile.Core.Logging
+namespace Domicile.Common.Logging
 {
     class NullLog : ILog
     {
