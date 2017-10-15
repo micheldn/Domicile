@@ -32,9 +32,8 @@ namespace Domicile.Common.Logging
 
         public void Write(string message, Exception exception, EventSeverity severity)
         {
-            var dateTimeFormat = string.IsNullOrWhiteSpace(DateTimeFormat) ? $"yyyy-MM-dd HH:mm:ss" : DateTimeFormat;
             Write(message, severity);
-            Console.WriteLine($"[{DateTime.Now.ToString(dateTimeFormat)}][{GetSeverityAsString(severity)}] {exception}");
+            Console.WriteLine($"{exception}");
         }
 
         private string GetSeverityAsString(EventSeverity eventSeverity)

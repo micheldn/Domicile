@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Runtime.InteropServices;
 using System.Timers;
 using Domicile.Common;
+using Nancy.TinyIoc;
 
-namespace Domicile.Core.Services
+namespace Domicile.Core.Services.System
 {
     public class SystemService : IService
     {
@@ -17,13 +15,14 @@ namespace Domicile.Core.Services
 
         private Timer _systemTimer;
 
+        public Guid Id { get; private set; }
         public ConcurrentDictionary<string, object> ServiceVariables { get; private set; }
         public string Name => "SystemService";
         public ServiceType ServiceType => ServiceType.System;
 
-        public SystemService(IDomicileApplication domicileApplication)
+        public SystemService()
         {
-            _domicileApplication = domicileApplication;
+            _domicileApplication = TinyIoCContainer.Current.Resolve<IDomicileApplication>("DomicileApplication");
         }
 
         public bool IsActive => _isActive;
@@ -32,12 +31,13 @@ namespace Domicile.Core.Services
         {
             _log = serviceContext.Log;
 
+            Id = Guid.NewGuid();
+
             _systemTimer = new Timer(1000);
 
             ServiceVariables = new ConcurrentDictionary<string, object>();
-            ServiceVariables.TryAdd("Shutdown", false);
-            ServiceVariables.TryAdd("CPUUsagePercentage", 0);
-            ServiceVariables.TryAdd("RAMUsagePercentage", 0);
+            ServiceVariables.TryAdd("shutdown", false);
+            ServiceVariables.TryAdd("platform", "");
         }
 
         public void OnStartup()

@@ -1,0 +1,194 @@
+﻿http://imti.co/post/145442415333/raspberry-pi-3-wifi-station-ap
+
+Raspberry Pi 3 - WiFi Station+AP
+
+Running the Raspberry Pi 3 as a Wifi client (station) and access point (ap) from the single built-in wifi.
+Overview
+
+We will be editing the following files:
+
+    WPA configuration/etc/wpa_supplicant/wpa_supplicant.conf
+    Network interfaces/etc/network/interfaces
+    Hostapd config/etc/hostapd/hostapd.conf
+    Hostapd default/etc/default/hostapd
+    AP startup script/usr/local/bin/hostapdstart
+    DNS/etc/dnsmasq.conf
+    Startup script/etc/rc.local
+
+Station Setup
+
+The following will configure the Pi to access a wifi network as a client (station).
+
+Create the wpa_supplicant configuration:
+
+sudo vi /etc/wpa_supplicant/wpa_supplicant.conf
+
+Add and customize the following:
+country=GB
+ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev
+update_config=1
+
+network={
+    ssid="SSID_OF_NETWORK"
+    psk="NETWORK_PASSWORD"
+}
+view raw
+wpa_supplicant.conf hosted with ❤ by GitHub
+Network Interfaces
+
+Edit the interfaces configuration:
+
+sudo vi /etc/network/interfaces
+
+The entire configuration file should look like the following:
+source-directory /etc/network/interfaces.d
+
+auto lo
+auto eth0
+auto wlan0
+auto uap0
+
+iface eth0 inet dhcp
+iface lo inet loopback
+
+allow-hotplug wlan0
+
+iface wlan0 inet dhcp
+wpa-conf /etc/wpa_supplicant/wpa_supplicant.conf
+
+iface uap0 inet static
+  address 192.168.50.1
+  netmask 255.255.255.0
+  network 192.168.50.0
+  broadcast 192.168.50.255
+  gateway 192.168.50.1
+view raw
+interfaces hosted with ❤ by GitHub
+
+The uap0 interface will be used later on for our Access Point (AP).
+
+Reboot the Pi:
+
+sudo reboot
+
+After the Pi boots up run the following command to check the status of the the wlan0 interface:
+
+ifconfig
+
+You should see wlan0 has received an ip address from the network it connected to:
+
+ifconfig
+
+Use iw to check the wireless status of wlan0.
+
+iw dev wlan0 link
+
+You see the SSId of the network you are connected to like this:
+
+iw dev wlan0 link
+AP Setup
+
+Install hostapd and dnsmasq:
+
+sudo apt-get install hostapd dnsmasq
+
+Create a new hostapd configuration:
+
+sudo vi /etc/hostapd/hostapd.conf
+
+The new configuration should look like this:
+interface=uap0
+ssid=testPiAP
+hw_mode=g
+channel=11
+macaddr_acl=0
+auth_algs=1
+ignore_broadcast_ssid=0
+wpa=2
+wpa_passphrase=badpassword
+wpa_key_mgmt=WPA-PSK
+wpa_pairwise=TKIP
+rsn_pairwise=CCMP
+view raw
+hostapd.conf hosted with ❤ by GitHub
+
+Of course you will want to customize a few things like the ssid and passphrase (wpa_passphrase). You will also want to determine the best channel by looking at the channel wlan0 is currently using.
+
+iwlist wlan0 channel
+
+In this example output the Pi is using Channel 11:
+
+iwlist output
+
+Next you will need to modify the hostapd default configuration to use your new configuration file:
+
+sudo vi /etc/default/hostapd
+
+Add the following line:
+
+DAEMON_CONF="/etc/hostapd/hostapd.conf"
+
+Next we need to make a script to set the interface to AP mode, start hostapd and set some iptables configuration.
+
+sudo vi /usr/local/bin/hostapdstart
+
+Add the following lines to this new script.
+#!/bin/bash
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+iw dev wlan0 interface add uap0 type __ap
+service dnsmasq restart
+sysctl net.ipv4.ip_forward=1
+iptables -t nat -A POSTROUTING -s 192.168.50.0/24 ! -d 192.168.50.0/24 -j MASQUERADE
+ifup uap0
+hostapd /etc/hostapd/hostapd.conf
+view raw
+hostapdstart hosted with ❤ by GitHub
+
+Update permissions on the new hostap start script.
+
+chmod 775 /usr/local/bin/hostapdstart
+
+DNS Setup
+
+We need the new AP to hand out IP addresses to our clients. Configure dnsmasq by editing the following.
+
+sudo vi /etc/dnsmasq.conf
+
+The configration should look like the following.
+interface=lo,uap0
+no-dhcp-interface=lo,wlan0
+bind-interfaces
+server=8.8.8.8
+domain-needed
+bogus-priv
+dhcp-range=192.168.50.50,192.168.50.150,12h
+view raw
+dnsmasq.conf hosted with ❤ by GitHub
+
+Start dnsmasq with the following.
+
+sudo service dnsmasq start
+
+Starup
+
+Edit the rc.local script to run hostapdstart on boot up.
+
+sudo vi /etc/rc.local
+
+Add the following line.
+
+/bin/bash /usr/local/bin/hostapdstart
+
+Reboot the the Pi
+
+sudo reboot
+
+Raspberry Pi Wifi links I have benefitted from
+
+    Thanks to the Raspberry Pi forum thread “Pi 3 as wiireless client and wireless AP?” / http://t.umblr.com/redirect?z=https%3A%2F%2Fwww.raspberrypi.org%2Fforums%2Fviewtopic.php%3Ff%3D36%26t%3D138730%26start%3D25&t=MjUxNDUzZGZiZjY5Y2U0Y2Q3OTFmNjg1OGY0NDYzM2IzOWUyM2ZmNyxvT01SbHhCQQ%3D%3D&b=t%3ARUiiRGxfoj_RETErtk8zKQ&p=http%3A%2F%2Fimti.co%2Fpost%2F145442415333%2Fraspberry-pi-3-wifi-station-ap&m=1
+    Adafruit’s excelent tutorial on “Setting up a Raspberry Pi as a WiFi access point” / http://t.umblr.com/redirect?z=https%3A%2F%2Flearn.adafruit.com%2Fsetting-up-a-raspberry-pi-as-a-wifi-access-point%2Finstall-software&t=MWJhZDZhYzc0YTYxZWNjYTkwODJkNDM1OTI1NWYzZmJkMGViMThmNCxvT01SbHhCQQ%3D%3D&b=t%3ARUiiRGxfoj_RETErtk8zKQ&p=http%3A%2F%2Fimti.co%2Fpost%2F145442415333%2Fraspberry-pi-3-wifi-station-ap&m=1
+    Automatically connect a Raspberry Pi to a Wifi network / http://t.umblr.com/redirect?z=http%3A%2F%2Fweworkweplay.com%2Fplay%2Fautomatically-connect-a-raspberry-pi-to-a-wifi-network%2F&t=ZDRhZWVmNDI3ZjY5ZmEwYmQwZTA5ZGNmMDdjMTViY2QwMjE0NjY0MixvT01SbHhCQQ%3D%3D&b=t%3ARUiiRGxfoj_RETErtk8zKQ&p=http%3A%2F%2Fimti.co%2Fpost%2F145442415333%2Fraspberry-pi-3-wifi-station-ap&m=1
+
+Wifi and Networking
+
+    How to connect to a WPA/WPA2 WiFi network using Linux command line / http://t.umblr.com/redirect?z=http%3A%2F%2Flinuxcommando.blogspot.com%2F2013%2F10%2Fhow-to-connect-to-wpawpa2-wifi-network.html&t=YWM0NjdkNzI1NzdlMTlkNzY4NmJhZjVjMTg5ZDUxY2I4NmZkNzAwZSxvT01SbHhCQQ%3D%3D&b=t%3ARUiiRGxfoj_RETErtk8zKQ&p=http%3A%2F%2Fimti.co%2Fpost%2F145442415333%2Fraspberry-pi-3-wifi-station-ap&m=1

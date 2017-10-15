@@ -17,16 +17,6 @@ namespace Domicile
 
             // Do Run
             app.Run();
-
-#if DEBUG
-            Console.ReadKey();
-#endif
-
-            app.Shutdown();
-
-#if DEBUG
-            Console.ReadKey();
-#endif
         }
     }
 }

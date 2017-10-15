@@ -12,6 +12,7 @@ namespace Domicile.Common
     {
         ConcurrentDictionary<string, object> ServiceVariables { get; }
         ServiceType ServiceType { get; }
+        Guid Id { get; }
         string Name { get; }
         bool IsActive { get; }
         void OnRegistered(IServiceContext serviceContext);

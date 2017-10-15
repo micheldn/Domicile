@@ -1,0 +1,26 @@
+﻿<div class="container" layout="row" layout-sm="row">
+    <ul style="list-style: none;">
+        <md-content class="md-padding">
+        <li ng-repeat="service in services">
+            <div  flex="noshrink">
+                <md-card md-theme="{{ showDarkTheme ? 'dark-purple' : 'default' }}" md-theme-watch >
+                    <md-card-title>
+                        <md-card-title-text>
+                            <span class="md-headline">{{ service.name }}</span>
+                            <span class="md-subhead">Active: {{ service.isActive }}</span>
+                        </md-card-title-text>
+                        <md-card-title-media>
+                            <div class="md-media-sm card-media"></div>
+                        </md-card-title-media>
+                    </md-card-title>
+                    <md-card-actions layout="row" layout-align="end center">
+                        <md-button ng-click="viewService(service)">View</md-button>
+                    </md-card-actions>
+                </md-card>
+            </div>
+        </li>
+       </md-content>
+    </ul>
+
+    <br /><br /><br /><br /><br /><br />
+</div>

@@ -34,9 +34,12 @@
   </PropertyGroup>
   <ItemGroup>
     <Folder Include="Diagrams\" />
+    <Folder Include="WeMos D1 Mini\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="ApplicationHierarchy.txt" />
+    <Content Include="RaspberryPi3ModelB\RPi3_MasterServer_WifiAP_Credentials.txt" />
+    <Content Include="RaspberryPi3ModelB\Setting up Raspberry Pi 3 Model b as Wifi Client and Access Point.txt" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Program.cs" />

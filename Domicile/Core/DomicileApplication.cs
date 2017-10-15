@@ -1,21 +1,18 @@
 ﻿using System.Collections.Generic;
-using Domicile.Core.Services;
+
 using Domicile.Common;
 using Domicile.Common.Extentions;
-using Domicile.WebServer;
 using Domicile.Common.Logging;
-using System.IO;
-using System.ComponentModel.Composition;
-using System.ComponentModel.Composition.Hosting;
-using System;
+using Domicile.Core.Services;
+using Domicile.Core.Services.Web;
+using Domicile.Core.Services.System;
+using Domicile.Core.Services.Hardware;
+using Nancy.TinyIoc;
 
 namespace Domicile.Core
 {
     public class DomicileApplication : IDomicileApplication
     {
-        private static IDomicileApplication _domicileApplicationInstance;
-
-        [ImportMany]
         private readonly List<IService> _services;
         private readonly ILog _log;
         private readonly BaseServiceContext _baseServiceContext;
@@ -31,12 +28,9 @@ namespace Domicile.Core
             _baseServiceContext = new BaseServiceContext(
                 _log,
                 _services);
-        }
 
-        /// <summary>
-        /// Return wether the application is active
-        /// </summary>
-        public bool IsActive { get; private set; }
+            TinyIoCContainer.Current.Register<IDomicileApplication, DomicileApplication>(this, "DomicileApplication");
+        }
 
         /// <summary>
         /// Return the Services list as Read Only list.
@@ -49,43 +43,21 @@ namespace Domicile.Core
         /// </summary>
         public void Setup()
         {
-            //var systemService = new SystemService(this);
-            //var hardwareDeviceService = new HardwareDeviceService();
-            //var webServerService = new WebServerService();
+            var systemService = new SystemService();
+            var hardwareDeviceService = new HardwareDeviceService();
+            var webServerService = new WebServerService();
 
-            //// TODO: 
+            // TODO: 
 
-            //_services.Add(systemService);
-            //_services.Add(hardwareDeviceService);
-            //_services.Add(webServerService);
-
-            _log.Informational("Checking for services...");
-
-            // AggregateCatalog combines all catalogs
-            var serviceCatalog = new AggregateCatalog();
-            var directoryCatalog = new DirectoryCatalog(AppDomain.CurrentDomain.BaseDirectory);
-            serviceCatalog.Catalogs.Add(directoryCatalog);
-            var container = new CompositionContainer(serviceCatalog);
-
-            try
-            {
-                _log.Informational("Composing Services");
-                container.ComposeParts(this);
-            }
-            catch(CompositionException compositionException)
-            {
-                _log.Error("Failed composing services");
-                _log.Error(compositionException.Message);
-            }
-
-            // Ensure that all the folders that are necessary are created/exist
-            Directory.CreateDirectory("Services");
+            _services.Add(systemService);
+            _services.Add(hardwareDeviceService);
+            _services.Add(webServerService);
 
             foreach (var service in _services)
             {
-                service.OnRegistered(_baseServiceContext);
                 _log.Informational("Called -> OnRegistered() for Service:  " + service.Name);
-            }
+                service.OnRegistered(_baseServiceContext);
+            }            
         }
 
         /// <summary>
@@ -96,11 +68,9 @@ namespace Domicile.Core
         {
             foreach (var service in _services)
             {
-                service.OnStartup();
                 _log.Informational("Called -> OnStartup() for Service:  " + service.Name);
+                service.OnStartup();
             }
-
-            IsActive = true;
         }
 
         /// <summary>
@@ -111,11 +81,9 @@ namespace Domicile.Core
         {
             foreach (var service in _services)
             {
-                service.OnShutdown();
                 _log.Informational("Called -> OnShutdown() for Service:  " + service.Name);
+                service.OnShutdown();
             }
-
-            IsActive = false;
         }
     }
 }

@@ -8,7 +8,6 @@ namespace Domicile.Common
 {
     public interface IDomicileApplication
     {
-        bool IsActive { get; }
         IReadOnlyCollection<IService> Services { get; }
         void Setup();
         void Run();

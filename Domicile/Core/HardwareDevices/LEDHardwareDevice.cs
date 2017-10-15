@@ -5,16 +5,14 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using Domicile.Common;
+using System.Net.Sockets;
+using Domicile.Core.Events;
 
 namespace Domicile.Core.HardwareDevices
 {
     public class LEDHardwareDevice : BaseHardwareDevice
     {
-        private LEDHardwareDevice()
-        {
-            
-        }
-        public LEDHardwareDevice(IPAddress address, int port) : base(address, port)
+        public LEDHardwareDevice(string name, string version) : base(name, version)
         {
             HardwareDeviceType = HardwareDeviceType.Lamp;
         }
